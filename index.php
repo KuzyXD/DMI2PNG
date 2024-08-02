@@ -311,11 +311,11 @@ class PNGMetadataExtractor {
                     $t['y'], $t['m'], $t['d'], $t['h'],
                     $t['min'], $t['s'] );
 
-                $exifTime = wfTimestamp( TS_EXIF, $strTime );
+                // $exifTime = wfTimestamp( TS_EXIF, $strTime );
 
-                if ( $exifTime ) {
-                    $text['DateTime'] = $exifTime;
-                }
+                // if ( $exifTime ) {
+                //     $text['DateTime'] = $exifTime;
+                // }
             } elseif ( $chunk_type == 'pHYs' ) {
                 // how big pixels are (dots per meter).
                 if ( $chunk_size !== 9 ) {
@@ -355,32 +355,32 @@ class PNGMetadataExtractor {
             $duration *= $loopCount;
         }
 
-        if ( isset( $text['DateTimeDigitized'] ) ) {
-            // Convert date format from rfc2822 to exif.
-            foreach ( $text['DateTimeDigitized'] as $name => &$value ) {
-                if ( $name === '_type' ) {
-                    continue;
-                }
+        // if ( isset( $text['DateTimeDigitized'] ) ) {
+        //     // Convert date format from rfc2822 to exif.
+        //     foreach ( $text['DateTimeDigitized'] as $name => &$value ) {
+        //         if ( $name === '_type' ) {
+        //             continue;
+        //         }
 
-                // @todo FIXME: Currently timezones are ignored.
-                // possibly should be wfTimestamp's
-                // responsibility. (at least for numeric TZ)
-                $formatted = wfTimestamp( TS_EXIF, $value );
-                if ( $formatted ) {
-                    // Only change if we could convert the
-                    // date.
-                    // The png standard says it should be
-                    // in rfc2822 format, but not required.
-                    // In general for the exif stuff we
-                    // prettify the date if we can, but we
-                    // display as-is if we cannot or if
-                    // it is invalid.
-                    // So do the same here.
+        //         // @todo FIXME: Currently timezones are ignored.
+        //         // possibly should be wfTimestamp's
+        //         // responsibility. (at least for numeric TZ)
+        //         $formatted = wfTimestamp( TS_EXIF, $value );
+        //         if ( $formatted ) {
+        //             // Only change if we could convert the
+        //             // date.
+        //             // The png standard says it should be
+        //             // in rfc2822 format, but not required.
+        //             // In general for the exif stuff we
+        //             // prettify the date if we can, but we
+        //             // display as-is if we cannot or if
+        //             // it is invalid.
+        //             // So do the same here.
 
-                    $value = $formatted;
-                }
-            }
-        }
+        //             $value = $formatted;
+        //         }
+        //     }
+        // }
 
         return array(
             'frameCount' => $frameCount,
@@ -402,7 +402,7 @@ class PNGMetadataExtractor {
     }
 }
 
-$spritesPerLoad = 1000;
+$spritesPerLoad = 5000;
 $dmiFiles = Array();
 $dir = new DirectoryIterator("in");
 foreach ($dir as $fileinfo) {
